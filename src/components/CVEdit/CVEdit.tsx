@@ -12,12 +12,21 @@ interface Props {
     index: number
   ) => void;
   handleAddSkill: () => void;
+  handleWorkExperienceChange: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    id: string
+  ) => void;
 }
 
 export class CVEdit extends Component<Props> {
   render() {
-    const { form, handleChange, handleSkillChange, handleAddSkill } =
-      this.props;
+    const {
+      form,
+      handleChange,
+      handleSkillChange,
+      handleAddSkill,
+      handleWorkExperienceChange,
+    } = this.props;
 
     return (
       <form className="border m-4 border-black p-4 rounded-md bg-stone-100">
@@ -148,10 +157,118 @@ export class CVEdit extends Component<Props> {
             </li>
           </ul>
           <p className="text-2xl my-2">Work Experience</p>
-          <ul>
-            <label>Company</label>
-            <input />
-          </ul>
+          {form.workExperiences.map((workExperience) => (
+            <ul key={workExperience.id} className="flex flex-col gap-1">
+              <li>
+                <label
+                  className="text-xl"
+                  htmlFor={`${workExperience.id}-position`}
+                >
+                  Position:{" "}
+                </label>
+                <input
+                  type="text"
+                  name="position"
+                  value={workExperience.position}
+                  onChange={(event) =>
+                    handleWorkExperienceChange(event, workExperience.id)
+                  }
+                  className="border w-full border-slate-900 p-1 rounded-sm"
+                  id={`${workExperience.id}-position`}
+                />
+              </li>
+              <li>
+                <label
+                  className="text-xl"
+                  htmlFor={`${workExperience.id}-companyName`}
+                >
+                  Company Name:{" "}
+                </label>
+                <input
+                  type="text"
+                  name="companyName"
+                  value={workExperience.companyName}
+                  onChange={(event) =>
+                    handleWorkExperienceChange(event, workExperience.id)
+                  }
+                  className="border w-full border-slate-900 p-1 rounded-sm"
+                  id={`${workExperience.id}-companyName`}
+                />
+              </li>
+              <li>
+                <label
+                  className="text-xl"
+                  htmlFor={`${workExperience.id}-location`}
+                >
+                  Location:{" "}
+                </label>
+                <input
+                  type="text"
+                  name="location"
+                  value={workExperience.location}
+                  onChange={(event) =>
+                    handleWorkExperienceChange(event, workExperience.id)
+                  }
+                  className="border w-full border-slate-900 p-1 rounded-sm"
+                  id={`${workExperience.id}-location`}
+                />
+              </li>
+              <li>
+                <label
+                  className="text-xl"
+                  htmlFor={`${workExperience.id}-startDate`}
+                >
+                  Start Date:{" "}
+                </label>
+                <input
+                  type="date"
+                  name="startDate"
+                  value={workExperience.startDate}
+                  onChange={(event) =>
+                    handleWorkExperienceChange(event, workExperience.id)
+                  }
+                  className="border w-full border-slate-900 p-1 rounded-sm"
+                  id={`${workExperience.id}-startDate`}
+                />
+              </li>
+              <li>
+                <label
+                  className="text-xl"
+                  htmlFor={`${workExperience.id}-endDate`}
+                >
+                  End Date:{" "}
+                </label>
+                <input
+                  type="date"
+                  name="endDate"
+                  value={workExperience.endDate}
+                  onChange={(event) =>
+                    handleWorkExperienceChange(event, workExperience.id)
+                  }
+                  className="border w-full border-slate-900 p-1 rounded-sm"
+                  id={`${workExperience.id}-endDate`}
+                />
+              </li>
+              <li>
+                <label
+                  className="text-xl"
+                  htmlFor={`${workExperience.id}-jobDescription`}
+                >
+                  Job Description:{" "}
+                </label>
+                <textarea
+                  className="border w-full border-slate-900 p-1 rounded-sm resize-none overflow-y-auto h-20"
+                  maxLength={255}
+                  value={workExperience.jobDescription}
+                  onChange={(event) =>
+                    handleWorkExperienceChange(event, workExperience.id)
+                  }
+                  name="jobDescription"
+                  id={`${workExperience.id}-jobDescription`}
+                />
+              </li>
+            </ul>
+          ))}
         </div>
       </form>
     );
