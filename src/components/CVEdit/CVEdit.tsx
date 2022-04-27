@@ -32,7 +32,7 @@ export class CVEdit extends Component<Props> {
 
     return (
       <form className="border m-4 border-black p-4 rounded-md bg-stone-100">
-        <div className="flex flex-col">
+        <section className="flex flex-col">
           <p className="text-2xl mb-2">Personal Details</p>
           <label className="text-lg" htmlFor="firstName">
             First Name:{" "}
@@ -112,6 +112,9 @@ export class CVEdit extends Component<Props> {
             name="description"
             id="description"
           />
+        </section>
+
+        <section className="flex flex-col">
           <p className="text-2xl my-2">Social</p>
           <label className="text-lg" htmlFor="github">
             Github:{" "}
@@ -135,6 +138,9 @@ export class CVEdit extends Component<Props> {
             name="linkedin"
             id="linkedin"
           />
+        </section>
+
+        <section className="flex flex-col">
           <p className="text-2xl my-2">Skills</p>
           <ul>
             {form.skills.map((skill, index) => (
@@ -158,6 +164,9 @@ export class CVEdit extends Component<Props> {
               </button>
             </li>
           </ul>
+        </section>
+
+        <section className="flex flex-col">
           <p className="text-2xl my-2">Work Experience</p>
           {form.workExperiences.map((workExperience) => (
             <ul key={workExperience.id} className="flex flex-col gap-1">
@@ -279,7 +288,7 @@ export class CVEdit extends Component<Props> {
             Add Work Experience
             <MdAdd />
           </button>
-        </div>
+        </section>
       </form>
     );
   }
