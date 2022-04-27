@@ -16,6 +16,7 @@ interface Props {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     id: string
   ) => void;
+  handleAddWorkExperience: () => void;
 }
 
 export class CVEdit extends Component<Props> {
@@ -26,6 +27,7 @@ export class CVEdit extends Component<Props> {
       handleSkillChange,
       handleAddSkill,
       handleWorkExperienceChange,
+      handleAddWorkExperience,
     } = this.props;
 
     return (
@@ -269,6 +271,14 @@ export class CVEdit extends Component<Props> {
               </li>
             </ul>
           ))}
+          <button
+            type="button"
+            onClick={handleAddWorkExperience}
+            className="w-full text-lg border rounded bg-sky-700 text-white flex items-center justify-center p-2"
+          >
+            Add Work Experience
+            <MdAdd />
+          </button>
         </div>
       </form>
     );
