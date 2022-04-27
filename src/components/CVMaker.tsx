@@ -54,7 +54,16 @@ export class CVMaker extends Component<Props, State> {
       photo: "",
       description: "",
       skills: ["", ""],
-      workExperience: [],
+      workExperience: [
+        {
+          companyName: "",
+          endDate: "",
+          jobDescription: "",
+          location: "",
+          position: "",
+          startDate: ""
+        }
+      ],
       education: [],
       title: "",
       location: "",
