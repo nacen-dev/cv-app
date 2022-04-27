@@ -112,7 +112,6 @@ export class CVMaker extends Component<Props, State> {
   };
 
   handleAddSkill = () => {
-    console.log("Add skill clicked");
     this.setState((prevState) => ({
       formState: {
         ...prevState.formState,
@@ -138,6 +137,28 @@ export class CVMaker extends Component<Props, State> {
     }));
   };
 
+  handleAddWorkExperience = () => {
+    const workExperience: WorkExperience = {
+      id: nanoid(),
+      companyName: "",
+      endDate: "",
+      jobDescription: "",
+      location: "",
+      position: "",
+      startDate: "",
+    };
+
+    this.setState((prevState) => ({
+      formState: {
+        ...prevState.formState,
+        workExperiences: [
+          ...prevState.formState.workExperiences,
+          workExperience,
+        ],
+      },
+    }));
+  };
+
   render() {
     return (
       <div>
@@ -147,6 +168,7 @@ export class CVMaker extends Component<Props, State> {
           handleChange={this.handleChange}
           handleAddSkill={this.handleAddSkill}
           handleWorkExperienceChange={this.handleWorkExperienceChange}
+          handleAddWorkExperience={this.handleAddWorkExperience}
         />
       </div>
     );
