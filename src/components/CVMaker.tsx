@@ -66,7 +66,15 @@ export class CVMaker extends Component<Props, State> {
           startDate: "",
         },
       ],
-      education: [],
+      education: [
+        {
+          id: nanoid(),
+          schoolName: "",
+          startDate: "",
+          degree: "",
+          endDate: "",
+        },
+      ],
       title: "",
       location: "",
     },
@@ -159,6 +167,39 @@ export class CVMaker extends Component<Props, State> {
     }));
   };
 
+  handleEducationChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    id: string
+  ) => {
+    this.setState((prevState) => ({
+      formState: {
+        ...prevState.formState,
+        education: prevState.formState.education.map((educ) =>
+          educ.id !== id
+            ? educ
+            : { ...educ, [event.target.name]: event.target.value }
+        ),
+      },
+    }));
+  };
+
+  handleAddEducation = () => {
+    const education: Education = {
+      id: nanoid(),
+      schoolName: "",
+      degree: "",
+      startDate: "",
+      endDate: "",
+    };
+
+    this.setState((prevState) => ({
+      formState: {
+        ...prevState.formState,
+        education: [...prevState.formState.education, education],
+      },
+    }));
+  };
+
   render() {
     return (
       <div>
@@ -169,6 +210,8 @@ export class CVMaker extends Component<Props, State> {
           handleAddSkill={this.handleAddSkill}
           handleWorkExperienceChange={this.handleWorkExperienceChange}
           handleAddWorkExperience={this.handleAddWorkExperience}
+          handleAddEducation={this.handleAddEducation}
+          handleEducationChange={this.handleEducationChange}
         />
       </div>
     );
