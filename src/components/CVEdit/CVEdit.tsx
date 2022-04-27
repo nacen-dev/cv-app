@@ -16,7 +16,12 @@ interface Props {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     id: string
   ) => void;
+  handleEducationChange: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    id: string
+  ) => void;
   handleAddWorkExperience: () => void;
+  handleAddEducation: () => void;
 }
 
 export class CVEdit extends Component<Props> {
@@ -28,12 +33,14 @@ export class CVEdit extends Component<Props> {
       handleAddSkill,
       handleWorkExperienceChange,
       handleAddWorkExperience,
+      handleAddEducation,
+      handleEducationChange,
     } = this.props;
 
     return (
       <form className="border m-4 border-black p-4 rounded-md bg-stone-100">
-        <section className="flex flex-col">
-          <p className="text-2xl mb-2">Personal Details</p>
+        <section className="flex flex-col gap-1 mb-4">
+          <p className="text-2xl">Personal Details</p>
           <label className="text-lg" htmlFor="firstName">
             First Name:{" "}
           </label>
@@ -114,8 +121,8 @@ export class CVEdit extends Component<Props> {
           />
         </section>
 
-        <section className="flex flex-col">
-          <p className="text-2xl my-2">Social</p>
+        <section className="flex flex-col gap-1 mb-4">
+          <p className="text-2xl">Social</p>
           <label className="text-lg" htmlFor="github">
             Github:{" "}
           </label>
@@ -140,11 +147,11 @@ export class CVEdit extends Component<Props> {
           />
         </section>
 
-        <section className="flex flex-col">
-          <p className="text-2xl my-2">Skills</p>
-          <ul>
+        <section className="flex flex-col gap-1 mb-4">
+          <p className="text-2xl">Skills</p>
+          <ul className="flex flex-col gap-2">
             {form.skills.map((skill, index) => (
-              <li className="mb-2" key={index}>
+              <li key={index}>
                 <input
                   type="text"
                   value={form.skills[index]}
@@ -160,19 +167,19 @@ export class CVEdit extends Component<Props> {
                 className="w-full text-lg border rounded bg-sky-700 text-white flex items-center justify-center p-2"
               >
                 Add Skill
-                <MdAdd />
+                <MdAdd className="text-2xl"/>
               </button>
             </li>
           </ul>
         </section>
 
-        <section className="flex flex-col">
-          <p className="text-2xl my-2">Work Experience</p>
+        <section className="flex flex-col gap-1 mb-4">
+          <p className="text-2xl">Work Experience</p>
           {form.workExperiences.map((workExperience) => (
             <ul key={workExperience.id} className="flex flex-col gap-1">
               <li>
                 <label
-                  className="text-xl"
+                  className="text-lg"
                   htmlFor={`${workExperience.id}-position`}
                 >
                   Position:{" "}
@@ -190,7 +197,7 @@ export class CVEdit extends Component<Props> {
               </li>
               <li>
                 <label
-                  className="text-xl"
+                  className="text-lg"
                   htmlFor={`${workExperience.id}-companyName`}
                 >
                   Company Name:{" "}
@@ -208,7 +215,7 @@ export class CVEdit extends Component<Props> {
               </li>
               <li>
                 <label
-                  className="text-xl"
+                  className="text-lg"
                   htmlFor={`${workExperience.id}-location`}
                 >
                   Location:{" "}
@@ -226,7 +233,7 @@ export class CVEdit extends Component<Props> {
               </li>
               <li>
                 <label
-                  className="text-xl"
+                  className="text-lg"
                   htmlFor={`${workExperience.id}-startDate`}
                 >
                   Start Date:{" "}
@@ -244,7 +251,7 @@ export class CVEdit extends Component<Props> {
               </li>
               <li>
                 <label
-                  className="text-xl"
+                  className="text-lg"
                   htmlFor={`${workExperience.id}-endDate`}
                 >
                   End Date:{" "}
@@ -262,7 +269,7 @@ export class CVEdit extends Component<Props> {
               </li>
               <li>
                 <label
-                  className="text-xl"
+                  className="text-lg"
                   htmlFor={`${workExperience.id}-jobDescription`}
                 >
                   Job Description:{" "}
@@ -286,7 +293,74 @@ export class CVEdit extends Component<Props> {
             className="w-full text-lg border rounded bg-sky-700 text-white flex items-center justify-center p-2"
           >
             Add Work Experience
-            <MdAdd />
+            <MdAdd className="text-2xl"/>
+          </button>
+        </section>
+        <section className="flex flex-col gap-1 mb-4">
+          <p className="text-2xl">Education</p>
+          {form.education.map((educ) => (
+            <ul className="flex flex-col gap-1" key={educ.id}>
+              <li>
+                <label htmlFor={`${educ.id}-schoolName`} className="text-lg">
+                  School Name:{" "}
+                </label>
+                <input
+                  value={educ.schoolName}
+                  className="border w-full border-slate-900 p-1 rounded-sm resize-none overflow-y-auto"
+                  onChange={(event) => handleEducationChange(event, educ.id)}
+                  id={`${educ.id}-schoolName`}
+                  name="schoolName"
+                  type="text"
+                />
+              </li>
+              <li>
+                <label htmlFor={`${educ.id}-degree`} className="text-lg">
+                  Degree:{" "}
+                </label>
+                <input
+                  value={educ.degree}
+                  className="border w-full border-slate-900 p-1 rounded-sm resize-none overflow-y-auto"
+                  onChange={(event) => handleEducationChange(event, educ.id)}
+                  id={`${educ.id}-degree`}
+                  name="degree"
+                  type="text"
+                />
+              </li>
+              <li>
+                <label htmlFor={`${educ.id}-startDate`} className="text-lg">
+                  Start Date:{" "}
+                </label>
+                <input
+                  value={educ.startDate}
+                  className="border w-full border-slate-900 p-1 rounded-sm resize-none overflow-y-auto"
+                  onChange={(event) => handleEducationChange(event, educ.id)}
+                  id={`${educ.id}-startDate`}
+                  name="startDate"
+                  type="date"
+                />
+              </li>
+              <li>
+                <label htmlFor={`${educ.id}-endDate`} className="text-lg">
+                  End Date:{" "}
+                </label>
+                <input
+                  value={educ.endDate}
+                  className="border w-full border-slate-900 p-1 rounded-sm resize-none overflow-y-auto"
+                  onChange={(event) => handleEducationChange(event, educ.id)}
+                  id={`${educ.id}-endDate`}
+                  name="endDate"
+                  type="date"
+                />
+              </li>
+            </ul>
+          ))}
+          <button
+            type="button"
+            onClick={handleAddEducation}
+            className="w-full text-lg border rounded bg-sky-700 text-white flex items-center justify-center p-2"
+          >
+            Add Education
+            <MdAdd className="text-2xl"/>
           </button>
         </section>
       </form>
