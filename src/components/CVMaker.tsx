@@ -34,9 +34,6 @@ export interface FormState {
 }
 
 interface Props {}
-
-type FormDataArray = "workExperience" | "education" | "skills";
-
 interface State {
   formState: FormState;
   previewMode: boolean;
@@ -115,18 +112,6 @@ export class CVMaker extends Component<Props, State> {
       formState: {
         ...prevState.formState,
         skills: [...prevState.formState.skills, ""],
-      },
-    }));
-  };
-
-  handleFormArrayElements = (formItem: string, formData: any) => {
-    this.setState((prevState) => ({
-      formState: {
-        ...prevState.formState,
-        [formItem as FormDataArray]: [
-          ...prevState.formState[formItem as FormDataArray],
-          formData,
-        ],
       },
     }));
   };
