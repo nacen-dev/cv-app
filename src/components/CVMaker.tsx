@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import { nanoid } from "nanoid";
+
 import { CVEdit } from "./CVEdit/CVEdit";
 
 interface WorkExperience {
+  id: string;
   position: string;
   startDate: string;
   endDate: string;
@@ -11,6 +14,7 @@ interface WorkExperience {
 }
 
 interface Education {
+  id: string;
   schoolName: string;
   startDate: string;
   endDate: string;
@@ -22,7 +26,7 @@ export interface FormState {
   lastName: string;
   email: string;
   phone: string;
-  workExperience: WorkExperience[];
+  workExperiences: WorkExperience[];
   linkedin: string;
   github: string;
   title: string;
@@ -51,15 +55,16 @@ export class CVMaker extends Component<Props, State> {
       photo: "",
       description: "",
       skills: ["", ""],
-      workExperience: [
+      workExperiences: [
         {
+          id: nanoid(),
           companyName: "",
           endDate: "",
           jobDescription: "",
           location: "",
           position: "",
-          startDate: ""
-        }
+          startDate: "",
+        },
       ],
       education: [],
       title: "",
@@ -116,6 +121,23 @@ export class CVMaker extends Component<Props, State> {
     }));
   };
 
+  handleWorkExperienceChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    id: string
+  ) => {
+    this.setState((prevState) => ({
+      formState: {
+        ...prevState.formState,
+        workExperiences: prevState.formState.workExperiences.map(
+          (workExperience) =>
+            workExperience.id !== id
+              ? workExperience
+              : { ...workExperience, [event.target.name]: event.target.value }
+        ),
+      },
+    }));
+  };
+
   render() {
     return (
       <div>
@@ -124,6 +146,7 @@ export class CVMaker extends Component<Props, State> {
           form={this.state.formState}
           handleChange={this.handleChange}
           handleAddSkill={this.handleAddSkill}
+          handleWorkExperienceChange={this.handleWorkExperienceChange}
         />
       </div>
     );
