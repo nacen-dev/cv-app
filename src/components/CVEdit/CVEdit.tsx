@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { FormState } from "../CVMaker";
-import { MdAdd } from "react-icons/md";
+import { MdAdd, MdDelete } from "react-icons/md";
 
 interface Props {
   form: FormState;
@@ -22,6 +22,7 @@ interface Props {
   ) => void;
   handleAddWorkExperience: () => void;
   handleAddEducation: () => void;
+  handleDeleteSkill: (id: number) => void;
 }
 
 export class CVEdit extends Component<Props> {
@@ -35,6 +36,7 @@ export class CVEdit extends Component<Props> {
       handleAddWorkExperience,
       handleAddEducation,
       handleEducationChange,
+      handleDeleteSkill,
     } = this.props;
 
     return (
@@ -151,13 +153,21 @@ export class CVEdit extends Component<Props> {
           <p className="text-2xl">Skills</p>
           <ul className="flex flex-col gap-2">
             {form.skills.map((skill, index) => (
-              <li key={index}>
+              <li key={index} className="flex gap-2">
                 <input
                   type="text"
                   value={form.skills[index]}
                   onChange={(event) => handleSkillChange(event, index)}
-                  className="border w-full border-slate-900 p-1 rounded-sm"
+                  className="border border-slate-900 p-1 rounded-sm flex-1"
                 />
+                <button
+                  type="button"
+                  onClick={() => handleDeleteSkill(index)}
+                  className="border bg-red-600 text-white flex items-center p-2 gap-1 uppercase"
+                >
+                  <p className="text-lg">Delete</p>
+                  <MdDelete className="text-xl" />
+                </button>
               </li>
             ))}
             <li>
@@ -167,7 +177,7 @@ export class CVEdit extends Component<Props> {
                 className="w-full text-lg border rounded bg-sky-700 text-white flex items-center justify-center p-2"
               >
                 Add Skill
-                <MdAdd className="text-2xl"/>
+                <MdAdd className="text-2xl" />
               </button>
             </li>
           </ul>
@@ -293,7 +303,7 @@ export class CVEdit extends Component<Props> {
             className="w-full text-lg border rounded bg-sky-700 text-white flex items-center justify-center p-2"
           >
             Add Work Experience
-            <MdAdd className="text-2xl"/>
+            <MdAdd className="text-2xl" />
           </button>
         </section>
         <section className="flex flex-col gap-1 mb-4">
@@ -360,7 +370,7 @@ export class CVEdit extends Component<Props> {
             className="w-full text-lg border rounded bg-sky-700 text-white flex items-center justify-center p-2"
           >
             Add Education
-            <MdAdd className="text-2xl"/>
+            <MdAdd className="text-2xl" />
           </button>
         </section>
       </form>
