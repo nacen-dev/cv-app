@@ -254,7 +254,7 @@ export class CVEdit extends Component<Props> {
                     Start Date:{" "}
                   </label>
                   <input
-                    type="date"
+                    type="text"
                     name="startDate"
                     value={workExperience.startDate}
                     onChange={(event) =>
@@ -272,7 +272,7 @@ export class CVEdit extends Component<Props> {
                     End Date:{" "}
                   </label>
                   <input
-                    type="date"
+                    type="text"
                     name="endDate"
                     value={workExperience.endDate}
                     onChange={(event) =>
@@ -360,7 +360,7 @@ export class CVEdit extends Component<Props> {
                   onChange={(event) => handleEducationChange(event, educ.id)}
                   id={`${educ.id}-startDate`}
                   name="startDate"
-                  type="date"
+                  type="text"
                 />
               </li>
               <li>
@@ -373,7 +373,7 @@ export class CVEdit extends Component<Props> {
                   onChange={(event) => handleEducationChange(event, educ.id)}
                   id={`${educ.id}-endDate`}
                   name="endDate"
-                  type="date"
+                  type="text"
                 />
               </li>
               <li className="my-2">
