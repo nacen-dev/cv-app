@@ -224,14 +224,34 @@ export class CVMaker extends Component<Props, State> {
     this.setState((prevState) => ({
       formState: {
         ...prevState.formState,
-        education: prevState.formState.education.filter(educ => educ.id !== id)
+        education: prevState.formState.education.filter(
+          (educ) => educ.id !== id
+        ),
       },
     }));
-  }
+  };
 
   render() {
     return (
       <div>
+        <div className="flex items-center justify-center my-4">
+          <button
+            className={`border py-2 px-4 w-24 rounded rounded-r-none ${
+              !this.state.previewMode && "bg-sky-700 text-white"
+            }`}
+            onClick={this.hidePreview}
+          >
+            Edit
+          </button>
+          <button
+            className={`border py-2 px-4 w-24 rounded rounded-l-none ${
+              this.state.previewMode && "bg-sky-700 text-white"
+            }`}
+            onClick={this.showPreview}
+          >
+            Preview
+          </button>
+        </div>
         <CVEdit
           handleSkillChange={this.handleSkillChange}
           form={this.state.formState}
