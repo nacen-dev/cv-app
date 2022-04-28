@@ -47,27 +47,16 @@ export class CVEdit extends Component<Props> {
       <form className="border m-4 border-black p-4 rounded-md bg-stone-100">
         <section className="flex flex-col gap-1 mb-4">
           <p className="text-2xl">Personal Details</p>
-          <label className="text-lg" htmlFor="firstName">
-            First Name:{" "}
+          <label className="text-lg" htmlFor="fullName">
+            Full Name:{" "}
           </label>
           <input
             className="border border-slate-900 p-1 rounded-sm"
             type="text"
             onChange={handleChange}
-            value={form.firstName}
-            name="firstName"
-            id="firstName"
-          />
-          <label className="text-lg" htmlFor="lastName">
-            Last Name:{" "}
-          </label>
-          <input
-            className="border border-slate-900 p-1 rounded-sm"
-            type="text"
-            onChange={handleChange}
-            value={form.lastName}
-            name="lastName"
-            id="lastName"
+            value={form.fullName}
+            name="fullName"
+            id="fullName"
           />
           <label className="text-lg" htmlFor="title">
             Title:{" "}
@@ -124,6 +113,17 @@ export class CVEdit extends Component<Props> {
             value={form.description}
             name="description"
             id="description"
+          />
+          <label className="text-xl" htmlFor="photo">
+            Photo:{" "}
+          </label>
+          <input
+            type="file"
+            accept="image/apng, image/avif, image/jpeg, image/jpg, image/png, image/svg+xml, image/webp"
+            name="photo"
+            id="photo"
+            onChange={handleChange}
+            className="w-full cursor-pointer"
           />
         </section>
 
