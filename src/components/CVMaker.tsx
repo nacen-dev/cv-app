@@ -220,6 +220,15 @@ export class CVMaker extends Component<Props, State> {
     }));
   };
 
+  handleDeleteEducation = (id: string) => {
+    this.setState((prevState) => ({
+      formState: {
+        ...prevState.formState,
+        education: prevState.formState.education.filter(educ => educ.id !== id)
+      },
+    }));
+  }
+
   render() {
     return (
       <div>
@@ -234,6 +243,7 @@ export class CVMaker extends Component<Props, State> {
           handleEducationChange={this.handleEducationChange}
           handleDeleteSkill={this.handleDeleteSkill}
           handleDeleteWorkExperience={this.handleDeleteWorkExperience}
+          handleDeleteEducation={this.handleDeleteEducation}
         />
       </div>
     );

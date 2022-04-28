@@ -24,6 +24,7 @@ interface Props {
   handleAddEducation: () => void;
   handleDeleteSkill: (index: number) => void;
   handleDeleteWorkExperience: (id: string) => void;
+  handleDeleteEducation: (id: string) => void;
 }
 
 export class CVEdit extends Component<Props> {
@@ -39,6 +40,7 @@ export class CVEdit extends Component<Props> {
       handleEducationChange,
       handleDeleteSkill,
       handleDeleteWorkExperience,
+      handleDeleteEducation,
     } = this.props;
 
     return (
@@ -153,7 +155,7 @@ export class CVEdit extends Component<Props> {
 
         <section className="flex flex-col gap-1 mb-4">
           <p className="text-2xl">Skills</p>
-          <ul className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-3">
             {form.skills.map((skill, index) => (
               <li key={index} className="flex gap-2">
                 <input
@@ -165,7 +167,7 @@ export class CVEdit extends Component<Props> {
                 <button
                   type="button"
                   onClick={() => handleDeleteSkill(index)}
-                  className="border bg-red-600 text-white flex items-center p-2 gap-1 rounded"
+                  className="border bg-red-600 text-white flex items-center py-1 px-2 gap-1 rounded"
                 >
                   <p className="text-lg">Delete</p>
                   <MdDelete className="text-2xl" />
@@ -302,7 +304,7 @@ export class CVEdit extends Component<Props> {
               <button
                 onClick={() => handleDeleteWorkExperience(workExperience.id)}
                 type="button"
-                className="text-lg rounded bg-red-600 text-white flex gap-1 p-2 w-full items-center justify-center"
+                className="text-lg my-2 rounded bg-red-600 text-white flex gap-1 p-2 w-full items-center justify-center"
               >
                 Delete Work Experience
                 <MdDelete className="text-2xl" />
@@ -373,6 +375,16 @@ export class CVEdit extends Component<Props> {
                   name="endDate"
                   type="date"
                 />
+              </li>
+              <li className="my-2">
+                <button
+                  onClick={() => handleDeleteEducation(educ.id)}
+                  type="button"
+                  className="text-lg rounded bg-red-600 text-white flex gap-1 p-2 w-full items-center justify-center"
+                >
+                  Delete Education
+                  <MdDelete className="text-2xl" />
+                </button>
               </li>
             </ul>
           ))}
