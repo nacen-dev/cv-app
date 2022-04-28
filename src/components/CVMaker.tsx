@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { nanoid } from "nanoid";
 
 import { CVEdit } from "./CVEdit/CVEdit";
+import { CVPreview } from "./CVPreview";
 
 interface WorkExperience {
   id: string;
@@ -22,8 +23,7 @@ interface Education {
 }
 
 export interface FormState {
-  firstName: string;
-  lastName: string;
+  fullName: string;
   email: string;
   phone: string;
   workExperiences: WorkExperience[];
@@ -39,15 +39,14 @@ export interface FormState {
 
 interface Props {}
 interface State {
-  formState: FormState;
+  form: FormState;
   previewMode: boolean;
 }
 
 export class CVMaker extends Component<Props, State> {
   state: State = {
-    formState: {
-      firstName: "",
-      lastName: "",
+    form: {
+      fullName: "",
       email: "",
       github: "",
       linkedin: "",
@@ -96,12 +95,27 @@ export class CVMaker extends Component<Props, State> {
   handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    this.setState((prevState) => ({
-      formState: {
-        ...prevState.formState,
-        [event.target.name]: event.target.value,
-      },
-    }));
+    if (event.target.name === "photo") {
+      const target = event.target as HTMLInputElement;
+      let file: File;
+      if (target.files !== null) {
+        file = target.files[0];
+
+        this.setState({
+          form: {
+            ...this.state.form,
+            photo: URL.createObjectURL(file),
+          },
+        });
+      }
+    } else {
+      this.setState((prevState) => ({
+        form: {
+          ...prevState.form,
+          [event.target.name]: event.target.value,
+        },
+      }));
+    }
   };
 
   handleSkillChange = (
@@ -109,9 +123,9 @@ export class CVMaker extends Component<Props, State> {
     index: number
   ) => {
     this.setState((prevState) => ({
-      formState: {
-        ...prevState.formState,
-        skills: prevState.formState.skills.map((skill, i) => {
+      form: {
+        ...prevState.form,
+        skills: prevState.form.skills.map((skill, i) => {
           if (i === index) return event.target.value;
           return skill;
         }),
@@ -121,18 +135,18 @@ export class CVMaker extends Component<Props, State> {
 
   handleAddSkill = () => {
     this.setState((prevState) => ({
-      formState: {
-        ...prevState.formState,
-        skills: [...prevState.formState.skills, ""],
+      form: {
+        ...prevState.form,
+        skills: [...prevState.form.skills, ""],
       },
     }));
   };
 
   handleDeleteSkill = (index: number) => {
     this.setState((prevState) => ({
-      formState: {
-        ...prevState.formState,
-        skills: prevState.formState.skills.filter((skill, i) => i !== index),
+      form: {
+        ...prevState.form,
+        skills: prevState.form.skills.filter((skill, i) => i !== index),
       },
     }));
   };
@@ -142,13 +156,12 @@ export class CVMaker extends Component<Props, State> {
     id: string
   ) => {
     this.setState((prevState) => ({
-      formState: {
-        ...prevState.formState,
-        workExperiences: prevState.formState.workExperiences.map(
-          (workExperience) =>
-            workExperience.id !== id
-              ? workExperience
-              : { ...workExperience, [event.target.name]: event.target.value }
+      form: {
+        ...prevState.form,
+        workExperiences: prevState.form.workExperiences.map((workExperience) =>
+          workExperience.id !== id
+            ? workExperience
+            : { ...workExperience, [event.target.name]: event.target.value }
         ),
       },
     }));
@@ -166,21 +179,18 @@ export class CVMaker extends Component<Props, State> {
     };
 
     this.setState((prevState) => ({
-      formState: {
-        ...prevState.formState,
-        workExperiences: [
-          ...prevState.formState.workExperiences,
-          workExperience,
-        ],
+      form: {
+        ...prevState.form,
+        workExperiences: [...prevState.form.workExperiences, workExperience],
       },
     }));
   };
 
   handleDeleteWorkExperience = (id: string) => {
     this.setState((prevState) => ({
-      formState: {
-        ...prevState.formState,
-        workExperiences: prevState.formState.workExperiences.filter(
+      form: {
+        ...prevState.form,
+        workExperiences: prevState.form.workExperiences.filter(
           (workExperience) => workExperience.id !== id
         ),
       },
@@ -192,9 +202,9 @@ export class CVMaker extends Component<Props, State> {
     id: string
   ) => {
     this.setState((prevState) => ({
-      formState: {
-        ...prevState.formState,
-        education: prevState.formState.education.map((educ) =>
+      form: {
+        ...prevState.form,
+        education: prevState.form.education.map((educ) =>
           educ.id !== id
             ? educ
             : { ...educ, [event.target.name]: event.target.value }
@@ -213,20 +223,18 @@ export class CVMaker extends Component<Props, State> {
     };
 
     this.setState((prevState) => ({
-      formState: {
-        ...prevState.formState,
-        education: [...prevState.formState.education, education],
+      form: {
+        ...prevState.form,
+        education: [...prevState.form.education, education],
       },
     }));
   };
 
   handleDeleteEducation = (id: string) => {
     this.setState((prevState) => ({
-      formState: {
-        ...prevState.formState,
-        education: prevState.formState.education.filter(
-          (educ) => educ.id !== id
-        ),
+      form: {
+        ...prevState.form,
+        education: prevState.form.education.filter((educ) => educ.id !== id),
       },
     }));
   };
@@ -252,19 +260,23 @@ export class CVMaker extends Component<Props, State> {
             Preview
           </button>
         </div>
-        <CVEdit
-          handleSkillChange={this.handleSkillChange}
-          form={this.state.formState}
-          handleChange={this.handleChange}
-          handleAddSkill={this.handleAddSkill}
-          handleWorkExperienceChange={this.handleWorkExperienceChange}
-          handleAddWorkExperience={this.handleAddWorkExperience}
-          handleAddEducation={this.handleAddEducation}
-          handleEducationChange={this.handleEducationChange}
-          handleDeleteSkill={this.handleDeleteSkill}
-          handleDeleteWorkExperience={this.handleDeleteWorkExperience}
-          handleDeleteEducation={this.handleDeleteEducation}
-        />
+        {this.state.previewMode ? (
+          <CVPreview form={this.state.form} />
+        ) : (
+          <CVEdit
+            handleSkillChange={this.handleSkillChange}
+            form={this.state.form}
+            handleChange={this.handleChange}
+            handleAddSkill={this.handleAddSkill}
+            handleWorkExperienceChange={this.handleWorkExperienceChange}
+            handleAddWorkExperience={this.handleAddWorkExperience}
+            handleAddEducation={this.handleAddEducation}
+            handleEducationChange={this.handleEducationChange}
+            handleDeleteSkill={this.handleDeleteSkill}
+            handleDeleteWorkExperience={this.handleDeleteWorkExperience}
+            handleDeleteEducation={this.handleDeleteEducation}
+          />
+        )}
       </div>
     );
   }
