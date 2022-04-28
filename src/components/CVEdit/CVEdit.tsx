@@ -22,7 +22,8 @@ interface Props {
   ) => void;
   handleAddWorkExperience: () => void;
   handleAddEducation: () => void;
-  handleDeleteSkill: (id: number) => void;
+  handleDeleteSkill: (index: number) => void;
+  handleDeleteWorkExperience: (id: string) => void;
 }
 
 export class CVEdit extends Component<Props> {
@@ -37,6 +38,7 @@ export class CVEdit extends Component<Props> {
       handleAddEducation,
       handleEducationChange,
       handleDeleteSkill,
+      handleDeleteWorkExperience,
     } = this.props;
 
     return (
@@ -163,10 +165,10 @@ export class CVEdit extends Component<Props> {
                 <button
                   type="button"
                   onClick={() => handleDeleteSkill(index)}
-                  className="border bg-red-600 text-white flex items-center p-2 gap-1 uppercase"
+                  className="border bg-red-600 text-white flex items-center p-2 gap-1 rounded"
                 >
                   <p className="text-lg">Delete</p>
-                  <MdDelete className="text-xl" />
+                  <MdDelete className="text-2xl" />
                 </button>
               </li>
             ))}
@@ -186,116 +188,126 @@ export class CVEdit extends Component<Props> {
         <section className="flex flex-col gap-1 mb-4">
           <p className="text-2xl">Work Experience</p>
           {form.workExperiences.map((workExperience) => (
-            <ul key={workExperience.id} className="flex flex-col gap-1">
-              <li>
-                <label
-                  className="text-lg"
-                  htmlFor={`${workExperience.id}-position`}
-                >
-                  Position:{" "}
-                </label>
-                <input
-                  type="text"
-                  name="position"
-                  value={workExperience.position}
-                  onChange={(event) =>
-                    handleWorkExperienceChange(event, workExperience.id)
-                  }
-                  className="border w-full border-slate-900 p-1 rounded-sm"
-                  id={`${workExperience.id}-position`}
-                />
-              </li>
-              <li>
-                <label
-                  className="text-lg"
-                  htmlFor={`${workExperience.id}-companyName`}
-                >
-                  Company Name:{" "}
-                </label>
-                <input
-                  type="text"
-                  name="companyName"
-                  value={workExperience.companyName}
-                  onChange={(event) =>
-                    handleWorkExperienceChange(event, workExperience.id)
-                  }
-                  className="border w-full border-slate-900 p-1 rounded-sm"
-                  id={`${workExperience.id}-companyName`}
-                />
-              </li>
-              <li>
-                <label
-                  className="text-lg"
-                  htmlFor={`${workExperience.id}-location`}
-                >
-                  Location:{" "}
-                </label>
-                <input
-                  type="text"
-                  name="location"
-                  value={workExperience.location}
-                  onChange={(event) =>
-                    handleWorkExperienceChange(event, workExperience.id)
-                  }
-                  className="border w-full border-slate-900 p-1 rounded-sm"
-                  id={`${workExperience.id}-location`}
-                />
-              </li>
-              <li>
-                <label
-                  className="text-lg"
-                  htmlFor={`${workExperience.id}-startDate`}
-                >
-                  Start Date:{" "}
-                </label>
-                <input
-                  type="date"
-                  name="startDate"
-                  value={workExperience.startDate}
-                  onChange={(event) =>
-                    handleWorkExperienceChange(event, workExperience.id)
-                  }
-                  className="border w-full border-slate-900 p-1 rounded-sm"
-                  id={`${workExperience.id}-startDate`}
-                />
-              </li>
-              <li>
-                <label
-                  className="text-lg"
-                  htmlFor={`${workExperience.id}-endDate`}
-                >
-                  End Date:{" "}
-                </label>
-                <input
-                  type="date"
-                  name="endDate"
-                  value={workExperience.endDate}
-                  onChange={(event) =>
-                    handleWorkExperienceChange(event, workExperience.id)
-                  }
-                  className="border w-full border-slate-900 p-1 rounded-sm"
-                  id={`${workExperience.id}-endDate`}
-                />
-              </li>
-              <li>
-                <label
-                  className="text-lg"
-                  htmlFor={`${workExperience.id}-jobDescription`}
-                >
-                  Job Description:{" "}
-                </label>
-                <textarea
-                  className="border w-full border-slate-900 p-1 rounded-sm resize-none overflow-y-auto h-20"
-                  maxLength={255}
-                  value={workExperience.jobDescription}
-                  onChange={(event) =>
-                    handleWorkExperienceChange(event, workExperience.id)
-                  }
-                  name="jobDescription"
-                  id={`${workExperience.id}-jobDescription`}
-                />
-              </li>
-            </ul>
+            <div key={workExperience.id}>
+              <ul className="flex flex-col gap-1">
+                <li>
+                  <label
+                    className="text-lg"
+                    htmlFor={`${workExperience.id}-position`}
+                  >
+                    Position:{" "}
+                  </label>
+                  <input
+                    type="text"
+                    name="position"
+                    value={workExperience.position}
+                    onChange={(event) =>
+                      handleWorkExperienceChange(event, workExperience.id)
+                    }
+                    className="border w-full border-slate-900 p-1 rounded-sm"
+                    id={`${workExperience.id}-position`}
+                  />
+                </li>
+                <li>
+                  <label
+                    className="text-lg"
+                    htmlFor={`${workExperience.id}-companyName`}
+                  >
+                    Company Name:{" "}
+                  </label>
+                  <input
+                    type="text"
+                    name="companyName"
+                    value={workExperience.companyName}
+                    onChange={(event) =>
+                      handleWorkExperienceChange(event, workExperience.id)
+                    }
+                    className="border w-full border-slate-900 p-1 rounded-sm"
+                    id={`${workExperience.id}-companyName`}
+                  />
+                </li>
+                <li>
+                  <label
+                    className="text-lg"
+                    htmlFor={`${workExperience.id}-location`}
+                  >
+                    Location:{" "}
+                  </label>
+                  <input
+                    type="text"
+                    name="location"
+                    value={workExperience.location}
+                    onChange={(event) =>
+                      handleWorkExperienceChange(event, workExperience.id)
+                    }
+                    className="border w-full border-slate-900 p-1 rounded-sm"
+                    id={`${workExperience.id}-location`}
+                  />
+                </li>
+                <li>
+                  <label
+                    className="text-lg"
+                    htmlFor={`${workExperience.id}-startDate`}
+                  >
+                    Start Date:{" "}
+                  </label>
+                  <input
+                    type="date"
+                    name="startDate"
+                    value={workExperience.startDate}
+                    onChange={(event) =>
+                      handleWorkExperienceChange(event, workExperience.id)
+                    }
+                    className="border w-full border-slate-900 p-1 rounded-sm"
+                    id={`${workExperience.id}-startDate`}
+                  />
+                </li>
+                <li>
+                  <label
+                    className="text-lg"
+                    htmlFor={`${workExperience.id}-endDate`}
+                  >
+                    End Date:{" "}
+                  </label>
+                  <input
+                    type="date"
+                    name="endDate"
+                    value={workExperience.endDate}
+                    onChange={(event) =>
+                      handleWorkExperienceChange(event, workExperience.id)
+                    }
+                    className="border w-full border-slate-900 p-1 rounded-sm"
+                    id={`${workExperience.id}-endDate`}
+                  />
+                </li>
+                <li>
+                  <label
+                    className="text-lg"
+                    htmlFor={`${workExperience.id}-jobDescription`}
+                  >
+                    Job Description:{" "}
+                  </label>
+                  <textarea
+                    className="border w-full border-slate-900 p-1 rounded-sm resize-none overflow-y-auto h-20"
+                    maxLength={255}
+                    value={workExperience.jobDescription}
+                    onChange={(event) =>
+                      handleWorkExperienceChange(event, workExperience.id)
+                    }
+                    name="jobDescription"
+                    id={`${workExperience.id}-jobDescription`}
+                  />
+                </li>
+              </ul>
+              <button
+                onClick={() => handleDeleteWorkExperience(workExperience.id)}
+                type="button"
+                className="text-lg rounded bg-red-600 text-white flex gap-1 p-2 w-full items-center justify-center"
+              >
+                Delete Work Experience
+                <MdDelete className="text-2xl" />
+              </button>
+            </div>
           ))}
           <button
             type="button"

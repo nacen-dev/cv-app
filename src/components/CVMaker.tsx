@@ -176,6 +176,17 @@ export class CVMaker extends Component<Props, State> {
     }));
   };
 
+  handleDeleteWorkExperience = (id: string) => {
+    this.setState((prevState) => ({
+      formState: {
+        ...prevState.formState,
+        workExperiences: prevState.formState.workExperiences.filter(
+          (workExperience) => workExperience.id !== id
+        ),
+      },
+    }));
+  };
+
   handleEducationChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     id: string
@@ -222,6 +233,7 @@ export class CVMaker extends Component<Props, State> {
           handleAddEducation={this.handleAddEducation}
           handleEducationChange={this.handleEducationChange}
           handleDeleteSkill={this.handleDeleteSkill}
+          handleDeleteWorkExperience={this.handleDeleteWorkExperience}
         />
       </div>
     );
