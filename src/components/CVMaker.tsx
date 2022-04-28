@@ -3,6 +3,8 @@ import { nanoid } from "nanoid";
 
 import { CVEdit } from "./CVEdit/CVEdit";
 import { CVPreview } from "./CVPreview";
+import ReactToPrint from "react-to-print";
+import "./CVMaker.css";
 
 interface WorkExperience {
   id: string;
@@ -53,7 +55,7 @@ export class CVMaker extends Component<Props, State> {
       phone: "",
       photo: "",
       description: "",
-      skills: ["", ""],
+      skills: [""],
       workExperiences: [
         {
           id: nanoid(),
@@ -239,10 +241,18 @@ export class CVMaker extends Component<Props, State> {
     }));
   };
 
+  componentRef: React.ReactInstance | null = null;
+
+  setComponentRef = (ref: React.ReactInstance) => {
+    this.componentRef = ref;
+  };
+
+  reactToPrintContent = () => this.componentRef;
+
   render() {
     return (
-      <div>
-        <div className="flex items-center justify-center my-4">
+      <div className="flex flex-col gap-4">
+        <div className="print:hidden flex items-center justify-center my-4 controls">
           <button
             className={`border py-2 px-4 w-24 rounded rounded-r-none ${
               !this.state.previewMode && "bg-sky-700 text-white"
@@ -260,8 +270,26 @@ export class CVMaker extends Component<Props, State> {
             Preview
           </button>
         </div>
+        <div
+          className={`print:hidden flex print-button justify-center items-center`}
+        >
+          <ReactToPrint
+            content={this.reactToPrintContent}
+            trigger={() => {
+              return (
+                <button className="border py-2 px-4 bg-sky-700 text-white">
+                  Print
+                </button>
+              );
+            }}
+          />
+        </div>
         {this.state.previewMode ? (
-          <CVPreview form={this.state.form} />
+          <CVPreview
+            form={this.state.form}
+            className="preview"
+            ref={this.setComponentRef as React.LegacyRef<CVPreview>}
+          />
         ) : (
           <CVEdit
             handleSkillChange={this.handleSkillChange}
