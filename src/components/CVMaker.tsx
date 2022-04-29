@@ -82,6 +82,19 @@ export class CVMaker extends Component<Props, State> {
     previewMode: false,
   };
 
+  componentDidMount() {
+    let localStorageData: State | string | null =
+      localStorage.getItem("cvData");
+    if (localStorageData) {
+      localStorageData = JSON.parse(localStorageData);
+      this.setState(localStorageData as State);
+    }
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem("cvData", JSON.stringify(this.state));
+  }
+
   showPreview = () => {
     this.setState({
       previewMode: true,
@@ -271,7 +284,9 @@ export class CVMaker extends Component<Props, State> {
           </button>
         </div>
         <div
-          className={`print:hidden flex print-button justify-center items-center`}
+          className={`print:hidden flex print-button justify-center items-center ${
+            !this.state.previewMode ? "hidden" : ""
+          }`}
         >
           <ReactToPrint
             content={this.reactToPrintContent}
