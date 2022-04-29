@@ -162,7 +162,7 @@ export class CVEdit extends Component<Props> {
                   type="text"
                   value={form.skills[index]}
                   onChange={(event) => handleSkillChange(event, index)}
-                  className="border border-slate-900 p-1 rounded-sm flex-1"
+                  className="border border-slate-900 p-1 rounded-sm w-full"
                 />
                 <button
                   type="button"
