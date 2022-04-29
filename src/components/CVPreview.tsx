@@ -72,18 +72,20 @@ export class CVPreview extends Component<Props> {
               </p>
               <ul className="flex flex-col">
                 {form.skills.map((skill, index) => {
-                  if (skill === "") return
+                  if (skill === "") return "";
                   return (
-                  <li key={index}>
-                    <p className="!bg-sky-700 text-white my-2 p-2 text-lg">
-                      {skill}
-                    </p>
-                  </li>
-                )})}
+                    <li key={index}>
+                      <p className="!bg-sky-700 text-white my-2 p-2 text-lg">
+                        {skill}
+                      </p>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           )}
         </div>
+
         <div className="px-5">
           <div className="p-3 flex flex-col !bg-sky-700 text-white rounded-md">
             <p className="text-3xl font-semibold">{form.fullName}</p>
@@ -92,30 +94,37 @@ export class CVPreview extends Component<Props> {
             </p>
             <p>{form.description}</p>
           </div>
-          <div className="mt-5">
-            <p className="text-2xl text-sky-700 border-b-sky-700 border-b-2 mb-4">
-              Work Experience
-            </p>
-            {form.workExperiences.map((workExperience) => (
-              <div key={workExperience.id}>
-                <p className="text-xl text-sky-700">
-                  {workExperience.position}
-                </p>
-                <p className="text-xl">{workExperience.companyName}</p>
-                <div className="flex justify-between text-sky-700">
-                  <p>{`${workExperience.startDate} - ${workExperience.endDate}`}</p>
-                  <p>{workExperience.location}</p>
+
+          {form.workExperiences.length > 0 && (
+            <div className="mt-5">
+              <p className="text-2xl text-sky-700 border-b-sky-700 border-b-2 mb-4">
+                Work Experience
+              </p>
+              {form.workExperiences.map((workExperience) => (
+                <div
+                  key={workExperience.id}
+                  className="mb-4 flex flex-col gap-2"
+                >
+                  <p className="text-xl text-sky-700">
+                    {workExperience.position}
+                  </p>
+                  <p className="text-xl">{workExperience.companyName}</p>
+                  <div className="flex justify-between text-sky-700">
+                    <p>{`${workExperience.startDate} - ${workExperience.endDate}`}</p>
+                    <p>{workExperience.location}</p>
+                  </div>
+                  <p>{workExperience.jobDescription}</p>
                 </div>
-                <p>{workExperience.jobDescription}</p>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
+
           <div className="mt-5">
             <p className="text-2xl text-sky-700 border-b-sky-700 border-b-2 mb-4">
               Education
             </p>
             {form.education.map((educ) => (
-              <div key={educ.id}>
+              <div key={educ.id} className="mb-4 flex flex-col gap-2">
                 <p className="text-xl text-sky-700">{educ.degree}</p>
                 <p className="text-xl">{educ.schoolName}</p>
                 <div className="flex justify-between text-sky-700">
